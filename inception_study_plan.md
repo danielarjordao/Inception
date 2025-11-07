@@ -11,6 +11,7 @@ A metodologia combina teoria + prática incremental: entender um conceito, test�
 - Compreender e aplicar os principais conceitos de conteinerização (Docker, Docker Compose, redes, volumes, variáveis de ambiente).
 - Construir a infraestrutura exigida pelo projeto Inception: **NGINX + TLS**, **WordPress + PHP-FPM**, **MariaDB**, **Volumes**, e **Rede Docker**.
 - Automatizar com Makefile e seguir as boas práticas de segurança e estrutura.
+- Implementar scripts automáticos de inicialização e serviços adicionais opcionais (Adminer).
 
 ---
 
@@ -67,8 +68,8 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx.key -out nginx
 
 ---
 
-### **Dia 3 – MariaDB + WordPress + Rede Interna**
-**Meta:** conectar WordPress ao banco de dados via Compose.
+### **Dia 3 – MariaDB + WordPress + Rede Interna + Automação**
+**Meta:** conectar WordPress ao banco de dados via Compose e automatizar a inicialização com scripts.  
 
 #### Manhã (4h)
 **Estudo:**
@@ -88,11 +89,49 @@ mysql -u root -p
 - Define `.env` e secrets (`db_password.txt`, `db_root_password.txt`).
 - Testa instalação do WordPress via navegador.
 
-**Resultado:** site WordPress online e conectado ao banco via HTTPS.
+---
+
+### ⚙️ Automação com Scripts de Inicialização
+
+Para evitar passos manuais e tornar o ambiente totalmente automatizado, cria scripts de configuração que rodem na primeira execução de cada container:
+
+#### 📜 `mariadb/tools/mdb_exec.sh`
+Roda no *entrypoint* do container MariaDB.  
+Cria banco, usuários e aplica permissões automaticamente:
+
+```bash
+#!/bin/bash
+service mariadb start
+mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
+mysql -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS';"
+mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';"
+mysql -e "FLUSH PRIVILEGES;"
+mysqladmin shutdown
+exec mysqld_safe
+```
+
+#### 📜 `wordpress/tools/wp_exec.sh`
+Executa o download e configuração do WordPress usando o CLI oficial (`wp-cli`).  
+Configura automaticamente o admin e o user definidos no `.env`:
+
+```bash
+#!/bin/bash
+cd /var/www/html
+wp core download --allow-root
+wp config create --allow-root     --dbname=$DB_NAME     --dbuser=$DB_USER     --dbpass=$DB_PASS     --dbhost=$DB_HOST
+wp core install --allow-root     --url=$WP_URL     --title="$WP_SITE_TITLE"     --admin_user=$WP_ADMIN_NAME     --admin_password=$(cat /run/secrets/wp_admin_pass)     --admin_email=$WP_ADMIN_EMAIL
+wp user create --allow-root     $WP_USER_NAME $WP_USER_EMAIL     --user_pass=$(cat /run/secrets/wp_user_pass)     --role=$WP_USER_ROLE
+exec php-fpm7.4 -F
+```
+
+**Boas práticas:**
+- Scripts devem ter `chmod +x` e serem chamados pelo `ENTRYPOINT` do Dockerfile.
+- Evite `sleep`, `tail -f` ou loops infinitos.
+- Use apenas comandos legítimos que mantêm o serviço ativo (`exec mysqld_safe`, `exec php-fpm -F`).
 
 ---
 
-### **Dia 4 – Automação + Refinamento Final**
+### **Dia 4 – Automação + Refinamento Final + Adminer**
 **Meta:** consolidar, automatizar e garantir estabilidade.
 
 #### Manhã (4h)
@@ -104,9 +143,32 @@ mysql -u root -p
 - Organiza `.env` e `secrets/`.
 - Finaliza Makefile (`build`, `clean`, `fclean`, `re`).
 - Escreve README com instruções e estrutura de pastas.
-- Se houver tempo: implementar um bônus (Redis ou Adminer).
 
-**Resultado:** projeto completo, funcional e pronto para defesa.
+---
+
+### 🌐 Bônus (opcional): Adminer
+
+Configurar um container **Adminer** para visualização e administração do banco de dados.
+
+#### Estrutura:
+```
+srcs/requirements/adminer/
+├── Dockerfile
+└── tools/
+    └── adminer.php
+```
+
+#### Exemplo de Dockerfile:
+```dockerfile
+FROM alpine:3.19
+RUN apk add --no-cache php php-session php-mysqli
+COPY ./tools/adminer.php /var/www/html/index.php
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]
+```
+
+Adicionar ao `docker-compose.yml` e testar acesso via `https://login.42.fr/adminer`.
+
+**Resultado:** ambiente completo, automatizado e pronto para defesa.
 
 ---
 
@@ -119,26 +181,36 @@ mysql -u root -p
 ---
 
 ## 📦 Estrutura Esperada do Projeto
+
 ```
 inception/
 ├── Makefile
-├── srcs/
-│   ├── docker-compose.yml
-│   ├── .env
-│   ├── requirements/
-│   │   ├── nginx/
-│   │   │   ├── Dockerfile
-│   │   │   └── conf/
-│   │   ├── mariadb/
-│   │   │   ├── Dockerfile
-│   │   │   └── conf/
-│   │   └── wordpress/
-│   │       ├── Dockerfile
-│   │       └── conf/
-└── secrets/
-    ├── db_password.txt
-    ├── db_root_password.txt
-    └── credentials.txt
+├── secrets/
+│   ├── db_password.txt
+│   ├── db_root_password.txt
+│   ├── wp_admin_pass.txt
+│   └── wp_user_pass.txt
+└── srcs/
+    ├── .env
+    ├── docker-compose.yml
+    └── requirements/
+        ├── nginx/
+        │   ├── Dockerfile
+        │   └── conf/
+        ├── mariadb/
+        │   ├── Dockerfile
+        │   ├── conf/
+        │   └── tools/
+        │       └── mdb_exec.sh
+        ├── wordpress/
+        │   ├── Dockerfile
+        │   ├── conf/
+        │   └── tools/
+        │       └── wp_exec.sh
+        └── adminer/   # bônus opcional
+            ├── Dockerfile
+            └── tools/
+                └── adminer.php
 ```
 
 ---
@@ -146,14 +218,8 @@ inception/
 ## ✅ Resultado Final Esperado
 Ao final do plano, você terá:
 - 3 containers funcionais: **NGINX (HTTPS)**, **WordPress (PHP-FPM)** e **MariaDB**.
+- Scripts de inicialização automáticos configurando o ambiente completo.
 - Volumes persistentes configurados.
 - Rede Docker funcional e segura.
 - Makefile automatizado.
 - Projeto pronto para defesa com estrutura limpa e documentada.
-
----
-
-**Autora:** Daniela Ramos Jordão  
-**Campus:** 42 Porto  
-**Projeto:** Inception  
-**Versão:** Novembro 2025
