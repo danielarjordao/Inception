@@ -117,6 +117,71 @@ echo "teste da VM" > /media/sf_share/teste.txt
 ```
 O arquivo `teste.txt` deve aparecer em `~/VM_share` no host.
 
+## 🧩 4.1. Ajustando permissões da pasta compartilhada
+
+Por padrão, o VirtualBox monta a pasta compartilhada (`/media/sf_share`) como somente leitura para o usuário comum.  
+Isso ocorre porque o sistema de arquivos **vboxsf** ignora comandos `chmod` e `chown`.  
+As permissões precisam ser definidas no momento da montagem.
+
+### ❌ Por que `chmod` não funciona
+
+O VirtualBox não cria um sistema de arquivos Linux real dentro da VM — ele apenas **espelha** o conteúdo da pasta do host através de um driver virtual.  
+Esse driver ignora modificações locais de permissão.  
+Por isso, o comando abaixo **não tem efeito**:
+```bash
+sudo chmod 777 /media/sf_share
+```
+
+### ✅ Solução: remontar com permissões corretas
+
+Para liberar leitura e escrita para o seu usuário:
+
+```bash
+sudo umount /media/sf_share
+sudo mount -t vboxsf -o rw,uid=$(id -u),gid=$(id -g),umask=000 share /media/sf_share
+```
+
+- `rw`: habilita leitura e escrita  
+- `uid` e `gid`: definem o dono como o usuário atual  
+- `umask=000`: libera leitura, escrita e execução para todos  
+
+Verificar o resultado:
+```bash
+ls -ld /media/sf_share
+```
+Saída esperada:
+```
+drwxrwxrwx 1 dramos-j vboxsf 4096 Nov  8 14:00 /media/sf_share
+```
+
+### ♻️ Tornar permanente (montagem automática no boot)
+
+Para não precisar rodar o comando manualmente toda vez, adicione esta linha no final do arquivo `/etc/fstab`:
+
+```bash
+share  /media/sf_share  vboxsf  rw,uid=1000,gid=1000,umask=000,auto  0  0
+```
+
+> 💡 Confirme se seu usuário tem UID 1000 com `id -u`.  
+> Normalmente, o primeiro usuário criado no sistema possui esse número.
+
+Após salvar o arquivo:
+```bash
+sudo reboot
+```
+
+A pasta será montada automaticamente com as permissões corretas a cada inicialização.
+
+
+### 🧪 Teste final
+
+```bash
+cd /media/sf_share
+echo "teste de escrita" > teste.txt
+```
+
+O arquivo deve ser criado sem erro e também aparecer na pasta compartilhada do host (`~/VM_share`).
+
 ## 🔧 5. Preparar sistema para Docker e Compose
 
 ### Atualizar pacotes e instalar dependências
