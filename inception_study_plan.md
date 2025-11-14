@@ -93,7 +93,7 @@ docker exec -it wordpress wp --info
   - `/var/www/html` com arquivos do WP.
   - que o entrypoint configura tudo automaticamente.
 
-# 🟥 **Dia 4 — NGINX + TLS (HTTPS)**
+# **Dia 4 — NGINX + TLS (HTTPS)**
 **Meta:** entregar o WordPress em HTTPS pela porta 443 (único ponto de entrada).
 
 ### Manhã
