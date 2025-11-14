@@ -240,6 +240,18 @@ sudo usermod -aG docker dramos-j
 newgrp docker
 ```
 
+## 7.9 Testar comandos básicos do Docker
+> **Comandos essenciais:** Testar comandos básicos do Docker garante que o ambiente está pronto para desenvolvimento.
+
+```
+docker run hello-world
+docker run -it debian bash
+docker ps -a
+docker rm -f <container_id>
+docker volume ls
+docker network ls
+```
+
 # 8. Estrutura base para o projeto Inception
 
 > **Organização:** A estrutura de diretórios conforme o subject do projeto facilita o desenvolvimento, build e deploy dos serviços Docker.
