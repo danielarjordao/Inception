@@ -1,0 +1,76 @@
+services:
+  nginx:
+    # Nome fixo do container
+    container_name: nginx
+    # Caminho para o Dockerfile do Nginx
+    build: ./requirements/nginx
+    ports:
+      # Porta HTTPS exposta ao host, mapeada para a porta 443 comum do Nginx e do WordPress, e solicitada no subject
+      - "443:443"
+    volumes:
+      # Arquivos do site (WordPress) montados no Nginx
+      - wp_files:/var/www/html
+    depends_on:
+      # Garante que o WordPress suba antes do Nginx
+      - wordpress
+    networks:
+      # Conecta o container à rede personalizada
+      - inception
+    # Reinicia automaticamente em caso de falha
+    restart: always
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    volumes:
+      # Mesmo volume do Nginx → arquivos compartilhados
+      - wp_files:/var/www/html
+    env_file:
+      # Carrega variáveis de ambiente (DB, admin, user etc.)
+      - .env
+    depends_on:
+      # WordPress só sobe após o MariaDB estar pronto
+      - mariadb
+    networks:
+      - inception
+    # Reinicia automaticamente em caso de falha
+    restart: always
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    volumes:
+      # Persistência do banco de dados
+      - wp_db:/var/lib/mysql
+    env_file:
+      # As credenciais do DB vêm todas do .env
+      - .env
+    networks:
+      - inception
+    # Reinicia automaticamente em caso de falha
+    restart: always
+
+# Volumes persistentes (guardados em /home/login/data/)
+volumes:
+  wp_files:
+    driver: local
+    driver_opts:
+      # Bind mount: conecta diretório do host ao container
+      type: none
+      o: bind
+      # Caminho no host onde os arquivos do WordPress serão persistidos
+      device: /home/dramos-j/data/wordpress
+  wp_db:
+    driver: local
+    driver_opts:
+      # Bind mount: conecta diretório do host ao container
+      type: none
+      o: bind
+      # Caminho no host onde o banco de dados será persistido
+      device: /home/dramos-j/data/mariadb
+
+# Rede interna que conecta os containers
+networks:
+  inception:
+    # Rede privada usando NAT interno do Docker
+    driver: bridge
