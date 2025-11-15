@@ -1,76 +1,68 @@
 services:
-  nginx:
-    # Nome fixo do container
-    container_name: nginx
-    # Caminho para o Dockerfile do Nginx
-    build: ./requirements/nginx
-    ports:
-      # Porta HTTPS exposta ao host, mapeada para a porta 443 comum do Nginx e do WordPress, e solicitada no subject
-      - "443:443"
-    volumes:
-      # Arquivos do site (WordPress) montados no Nginx
-      - wp_files:/var/www/html
-    depends_on:
-      # Garante que o WordPress suba antes do Nginx
-      - wordpress
-    networks:
-      # Conecta o container à rede personalizada
-      - inception
-    # Reinicia automaticamente em caso de falha
-    restart: always
-
-  wordpress:
-    container_name: wordpress
-    build: ./requirements/wordpress
-    volumes:
-      # Mesmo volume do Nginx → arquivos compartilhados
-      - wp_files:/var/www/html
-    env_file:
-      # Carrega variáveis de ambiente (DB, admin, user etc.)
-      - .env
-    depends_on:
-      # WordPress só sobe após o MariaDB estar pronto
-      - mariadb
-    networks:
-      - inception
-    # Reinicia automaticamente em caso de falha
-    restart: always
 
   mariadb:
+    # Nome fixo do container
     container_name: mariadb
-    build: ./requirements/mariadb
-    volumes:
-      # Persistência do banco de dados
-      - wp_db:/var/lib/mysql
-    env_file:
-      # As credenciais do DB vêm todas do .env
-      - .env
-    networks:
-      - inception
+
+    # Construção da imagem a partir do Dockerfile local
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+
+    # Usa a imagem personalizada do MariaDB
+    image: mariadb
+
     # Reinicia automaticamente em caso de falha
     restart: always
 
-# Volumes persistentes (guardados em /home/login/data/)
+    # O MariaDB não expõe porta para fora.
+    # Apenas serviços da mesma rede Docker (ex: WordPress) podem acessá-lo.
+    networks:
+      - inception
+
+    # Volume persistente para salvar os dados do banco
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+
+    # Variáveis de ambiente usadas pelo script de inicialização
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+
+    # Uso de secrets para maior segurança das senhas
+    secrets:
+      - db_password
+      - db_root_password
+
+
+# Volumes persistentes (guardar dados fora dos containers)
+# Esses diretórios ficam no host, em /home/login/data/, conforme o subject exige.
 volumes:
-  wp_files:
+
+  # Volume onde ficarão os arquivos do WordPress (plugins, temas, uploads)
+  wordpress_data:
     driver: local
     driver_opts:
-      # Bind mount: conecta diretório do host ao container
+      # Bind-mount: conecta um diretório real do host
       type: none
       o: bind
-      # Caminho no host onde os arquivos do WordPress serão persistidos
       device: /home/dramos-j/data/wordpress
-  wp_db:
+
+  # Volume onde o MariaDB salva o banco de dados
+  mariadb_data:
     driver: local
     driver_opts:
-      # Bind mount: conecta diretório do host ao container
+      # Bind-mount: conecta um diretório real do host
       type: none
       o: bind
-      # Caminho no host onde o banco de dados será persistido
       device: /home/dramos-j/data/mariadb
 
-# Rede interna que conecta os containers
+
+# Rede interna dos containers (NGINX - WordPress - MariaDB)
 networks:
   inception:
-    # Rede privada usando NAT interno do Docker
+    # Rede isolada acessível somente entre os serviços do projeto
     driver: bridge
