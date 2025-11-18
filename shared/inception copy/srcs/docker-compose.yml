@@ -1,0 +1,62 @@
+services:
+
+  mariadb:
+    # Nome fixo do container
+    container_name: mariadb
+
+    # Construção da imagem a partir do Dockerfile local
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+
+    # Usa a imagem personalizada do MariaDB
+    image: mariadb
+
+    # Reinicia automaticamente em caso de falha
+    restart: always
+
+    # O MariaDB não expõe porta para fora.
+    # Apenas serviços da mesma rede Docker (ex: WordPress) podem acessá-lo.
+    networks:
+      - inception
+
+    # Volume persistente para salvar os dados do banco
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+
+    # Variáveis de ambiente usadas pelo script de inicialização
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+
+# Volumes persistentes (guardar dados fora dos containers)
+# Esses diretórios ficam no host, em /home/login/data/, conforme o subject exige.
+volumes:
+
+  # Volume onde ficarão os arquivos do WordPress (plugins, temas, uploads)
+  wordpress_data:
+    driver: local
+    driver_opts:
+      # Bind-mount: conecta um diretório real do host
+      type: none
+      o: bind
+      device: /home/dramos-j/data/wordpress
+
+  # Volume onde o MariaDB salva o banco de dados
+  mariadb_data:
+    driver: local
+    driver_opts:
+      # Bind-mount: conecta um diretório real do host
+      type: none
+      o: bind
+      device: /home/dramos-j/data/mariadb
+
+
+# Rede interna dos containers (NGINX - WordPress - MariaDB)
+networks:
+  inception:
+    # Rede isolada acessível somente entre os serviços do projeto
+    driver: bridge
