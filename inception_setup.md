@@ -252,7 +252,42 @@ docker volume ls
 docker network ls
 ```
 
-# 8. Estrutura base para o projeto Inception
+# 8. Configurar hosts para acesso ao site
+
+> **Acesso ao WordPress:** Para acessar o site via `dramos-j.42.fr` (conforme exigido pelo subject), é necessário mapear este domínio para localhost no arquivo `/etc/hosts`.
+
+## 8.1 Editar o arquivo hosts:
+
+```
+sudo vim /etc/hosts
+```
+
+## 8.2 Adicionar a linha:
+
+```
+127.0.0.1       dramos-j.42.fr
+```
+
+O arquivo deve ficar assim:
+
+```
+127.0.0.1       localhost
+127.0.0.1       dramos-j.42.fr
+127.0.1.1       inception
+...
+```
+
+## 8.3 Salvar e testar:
+
+```
+ping dramos-j.42.fr
+```
+
+Deve responder de `127.0.0.1`.
+
+> **Nota:** Na avaliação, o avaliador deve conseguir acessar `https://dramos-j.42.fr` no navegador. Se você instalar um navegador na VM (firefox-esr), poderá testar diretamente. Alternativamente, pode testar com `curl https://dramos-j.42.fr` após configurar o NGINX.
+
+# 9. Estrutura base para o projeto Inception
 
 > **Organização:** A estrutura de diretórios conforme o subject do projeto facilita o desenvolvimento, build e deploy dos serviços Docker.
 
@@ -272,7 +307,7 @@ inception/
             └── Dockerfile
 ```
 
-# 9. Fazer um snapshot da VM
+# 10. Fazer um snapshot da VM
 > **Snapshot:** Tirar um snapshot da VM neste ponto permite retornar a este estado limpo e funcional a qualquer momento, facilitando testes e desenvolvimento.
 
 - Desligar a VM
