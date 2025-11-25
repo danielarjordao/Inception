@@ -13,6 +13,9 @@ RUN apt install -y --no-install-recommends gosu
 # Clean up package cache to reduce image size
 RUN apt clean && rm -rf /var/lib/apt/lists/*
 
+# Remove any pre-initialized data from the image
+RUN rm -rf /var/lib/mysql/*
+
 # Copy custom MariaDB configuration file
 COPY conf/mariadb.cnf /etc/mysql/mariadb.conf.d/
 

@@ -77,7 +77,7 @@ Login:
 
 ```
 login: dramos-j
-password: senha
+password: segura
 ```
 
 Atualizar:
