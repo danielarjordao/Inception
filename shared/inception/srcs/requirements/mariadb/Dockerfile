@@ -1,27 +1,41 @@
-# Usa Debian 12 (penúltima versão estável exigida pelo projeto)
-FROM debian:12
+# Debian Bookworm (Debian 12)
+FROM debian:bookworm-slim
 
-# Atualiza o gerenciador de pacotes
-# Instala o servidor MariaDB dentro da imagem
-RUN apt update -y && apt install -y mariadb-server
+# Update package lists
+RUN apt update
 
-# Adiciona uma configuração personalizada do MariaDB
-# (ajustes como bind-address, diretórios e compatibilidade com Docker)
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+# Install MariaDB server
+RUN apt install -y --no-install-recommends mariadb-server
 
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+# Install gosu to run MariaDB under the mysql user
+RUN apt install -y --no-install-recommends gosu
 
-# Copia o script de inicialização personalizado para o funcionamento com o projeto
-# O script configura tudo o que o MariaDB precisa (database, usuários, permissões)
-# e depois inicia o servidor real como processo principal (PID 1)
-# O script de inicialização substitui o uso de hacks como tail -f ou loops infinitos.
-COPY ./tools/mariadb_init.sh /usr/local/bin/mariadb_init.sh
+# Clean up package cache to reduce image size
+RUN apt clean && rm -rf /var/lib/apt/lists/*
 
-# Adiciona permissão de execução ao script
+# Copy custom MariaDB configuration file
+COPY conf/mariadb.cnf /etc/mysql/mariadb.conf.d/
+
+# Set proper permissions for configuration file
+RUN chmod +r /etc/mysql/mariadb.conf.d/mariadb.cnf
+
+# Create directory for MariaDB socket
+RUN mkdir -p /run/mysqld
+
+# Set ownership of socket directory to mysql user
+RUN chown -R mysql:mysql /run/mysqld
+
+# Copy initialization script
+COPY tools/mariadb_init.sh /usr/local/bin/
+
+# Make initialization script executable
 RUN chmod +x /usr/local/bin/mariadb_init.sh
 
-# O MariaDB funciona como um daemon, ou seja, um processo de serviço que roda em
-# segundo plano e mantém o banco acessível. Em um container Docker, esse daemon
-# deve ser o PID 1. O script abaixo executa a configuração inicial apenas na
-# primeira execução e, em seguida, inicia o mysqld como o daemon principal.
-ENTRYPOINT ["mariadb_init.sh"]
+# Expose MariaDB port to allow external connections
+EXPOSE 3306
+
+# Set the entrypoint to the custom initialization script
+ENTRYPOINT ["/usr/local/bin/mariadb_init.sh"]
+
+# Start MariaDB server as the mysql user using gosu
+CMD ["gosu", "mysql", "mysqld"]

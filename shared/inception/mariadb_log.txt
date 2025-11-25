@@ -1,0 +1,244 @@
+mariadb  | MariaDB data directory already exists. Skipping initialization.
+mariadb  | 2025-11-25 10:22:30 0 [Note] Starting MariaDB 10.11.14-MariaDB-0+deb12u2 source revision 053f9bcb5b147bf00edb99e1310bae9125b7f125 server_uid b2w3MwokySB1G1YSjGV3tn9ssJ0= as process 1
+mariadb  | 2025-11-25 10:22:30 0 [Note] InnoDB: Compressed tables use zlib 1.2.13
+mariadb  | 2025-11-25 10:22:30 0 [Note] InnoDB: Number of transaction pools: 1
+mariadb  | 2025-11-25 10:22:30 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+mariadb  | 2025-11-25 10:22:30 0 [Note] mysqld: O_TMPFILE is not supported on /tmp (disabling future attempts)
+mariadb  | 2025-11-25 10:22:30 0 [Warning] mysqld: io_uring_queue_init() failed with EPERM: sysctl kernel.io_uring_disabled has the value 2, or 1 and the user of the process is not a member of sysctl kernel.io_uring_group. (see man 2 io_uring_setup).
+mariadb  | create_uring failed: falling back to libaio
+mariadb  | 2025-11-25 10:22:30 0 [Note] InnoDB: native AIO failed: falling back to innodb_use_native_aio=OFF
+mariadb  | 2025-11-25 10:22:30 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+mariadb  | 2025-11-25 10:22:31 0 [Note] InnoDB: Completed initialization of buffer pool
+mariadb  | 2025-11-25 10:22:31 0 [Note] InnoDB: File system buffers for log disabled (block size=512 bytes)
+mariadb  | 2025-11-25 10:22:31 0 [Note] InnoDB: End of log at LSN=46980
+mariadb  | 2025-11-25 10:22:31 0 [Note] InnoDB: 128 rollback segments are active.
+mariadb  | 2025-11-25 10:22:31 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+mariadb  | 2025-11-25 10:22:31 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+mariadb  | 2025-11-25 10:22:31 0 [Note] InnoDB: log sequence number 46980; transaction id 14
+mariadb  | 2025-11-25 10:22:31 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+mariadb  | 2025-11-25 10:22:31 0 [Note] Plugin 'FEEDBACK' is disabled.
+mariadb  | 2025-11-25 10:22:31 0 [Warning] You need to use --log-bin to make --expire-logs-days or --binlog-expire-logs-seconds work.
+mariadb  | 2025-11-25 10:22:31 0 [Note] Server socket created on IP: '0.0.0.0', port: '3306'.
+mariadb  | 2025-11-25 10:22:31 0 [ERROR] Can't start server : Bind on unix socket: No such file or directory
+mariadb  | 2025-11-25 10:22:31 0 [ERROR] Do you already have another server running on socket: /run/mysqld/mysqld.sock ?
+mariadb  | 2025-11-25 10:22:31 0 [ERROR] Aborting
+mariadb  | MariaDB data directory already exists. Skipping initialization.
+mariadb  | 2025-11-25 10:22:32 0 [Note] Starting MariaDB 10.11.14-MariaDB-0+deb12u2 source revision 053f9bcb5b147bf00edb99e1310bae9125b7f125 server_uid yi/Zita34QvxtBOmrwyo897nlXE= as process 1
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: Compressed tables use zlib 1.2.13
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: Number of transaction pools: 1
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+mariadb  | 2025-11-25 10:22:32 0 [Note] mysqld: O_TMPFILE is not supported on /tmp (disabling future attempts)
+mariadb  | 2025-11-25 10:22:32 0 [Warning] mysqld: io_uring_queue_init() failed with EPERM: sysctl kernel.io_uring_disabled has the value 2, or 1 and the user of the process is not a member of sysctl kernel.io_uring_group. (see man 2 io_uring_setup).
+mariadb  | create_uring failed: falling back to libaio
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: native AIO failed: falling back to innodb_use_native_aio=OFF
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: Completed initialization of buffer pool
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: File system buffers for log disabled (block size=512 bytes)
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: End of log at LSN=46980
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: 128 rollback segments are active.
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: log sequence number 46980; transaction id 14
+mariadb  | 2025-11-25 10:22:32 0 [Note] Plugin 'FEEDBACK' is disabled.
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+mariadb  | 2025-11-25 10:22:32 0 [Warning] You need to use --log-bin to make --expire-logs-days or --binlog-expire-logs-seconds work.
+mariadb  | 2025-11-25 10:22:32 0 [Note] InnoDB: Buffer pool(s) load completed at 251125 10:22:32
+mariadb  | 2025-11-25 10:22:32 0 [Note] Server socket created on IP: '0.0.0.0', port: '3306'.
+mariadb  | 2025-11-25 10:22:32 0 [ERROR] Can't start server : Bind on unix socket: No such file or directory
+mariadb  | 2025-11-25 10:22:32 0 [ERROR] Do you already have another server running on socket: /run/mysqld/mysqld.sock ?
+mariadb  | 2025-11-25 10:22:32 0 [ERROR] Aborting
+mariadb  | MariaDB data directory already exists. Skipping initialization.
+mariadb  | 2025-11-25 10:22:33 0 [Note] Starting MariaDB 10.11.14-MariaDB-0+deb12u2 source revision 053f9bcb5b147bf00edb99e1310bae9125b7f125 server_uid 8IMeM1ZSZ4uEnjCsOvqZt6fwPJQ= as process 1
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: Compressed tables use zlib 1.2.13
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: Number of transaction pools: 1
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+mariadb  | 2025-11-25 10:22:33 0 [Note] mysqld: O_TMPFILE is not supported on /tmp (disabling future attempts)
+mariadb  | 2025-11-25 10:22:33 0 [Warning] mysqld: io_uring_queue_init() failed with EPERM: sysctl kernel.io_uring_disabled has the value 2, or 1 and the user of the process is not a member of sysctl kernel.io_uring_group. (see man 2 io_uring_setup).
+mariadb  | create_uring failed: falling back to libaio
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: native AIO failed: falling back to innodb_use_native_aio=OFF
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: Completed initialization of buffer pool
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: File system buffers for log disabled (block size=512 bytes)
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: End of log at LSN=46980
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: 128 rollback segments are active.
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: log sequence number 46980; transaction id 14
+mariadb  | 2025-11-25 10:22:33 0 [Note] Plugin 'FEEDBACK' is disabled.
+mariadb  | 2025-11-25 10:22:33 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+mariadb  | 2025-11-25 10:22:33 0 [Warning] You need to use --log-bin to make --expire-logs-days or --binlog-expire-logs-seconds work.
+mariadb  | 2025-11-25 10:22:33 0 [Note] Server socket created on IP: '0.0.0.0', port: '3306'.
+mariadb  | 2025-11-25 10:22:33 0 [ERROR] Can't start server : Bind on unix socket: No such file or directory
+mariadb  | 2025-11-25 10:22:33 0 [ERROR] Do you already have another server running on socket: /run/mysqld/mysqld.sock ?
+mariadb  | 2025-11-25 10:22:33 0 [ERROR] Aborting
+mariadb  | MariaDB data directory already exists. Skipping initialization.
+mariadb  | 2025-11-25 10:22:35 0 [Note] Starting MariaDB 10.11.14-MariaDB-0+deb12u2 source revision 053f9bcb5b147bf00edb99e1310bae9125b7f125 server_uid QdpP9ups9gAYNEwA8aR35TO+Gu8= as process 1
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: Compressed tables use zlib 1.2.13
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: Number of transaction pools: 1
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+mariadb  | 2025-11-25 10:22:35 0 [Note] mysqld: O_TMPFILE is not supported on /tmp (disabling future attempts)
+mariadb  | 2025-11-25 10:22:35 0 [Warning] mysqld: io_uring_queue_init() failed with EPERM: sysctl kernel.io_uring_disabled has the value 2, or 1 and the user of the process is not a member of sysctl kernel.io_uring_group. (see man 2 io_uring_setup).
+mariadb  | create_uring failed: falling back to libaio
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: native AIO failed: falling back to innodb_use_native_aio=OFF
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: Completed initialization of buffer pool
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: File system buffers for log disabled (block size=512 bytes)
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: End of log at LSN=46980
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: 128 rollback segments are active.
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: log sequence number 46980; transaction id 14
+mariadb  | 2025-11-25 10:22:35 0 [Note] Plugin 'FEEDBACK' is disabled.
+mariadb  | 2025-11-25 10:22:35 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+mariadb  | 2025-11-25 10:22:35 0 [Warning] You need to use --log-bin to make --expire-logs-days or --binlog-expire-logs-seconds work.
+mariadb  | 2025-11-25 10:22:35 0 [Note] Server socket created on IP: '0.0.0.0', port: '3306'.
+mariadb  | 2025-11-25 10:22:35 0 [ERROR] Can't start server : Bind on unix socket: No such file or directory
+mariadb  | 2025-11-25 10:22:35 0 [ERROR] Do you already have another server running on socket: /run/mysqld/mysqld.sock ?
+mariadb  | 2025-11-25 10:22:35 0 [ERROR] Aborting
+mariadb  | MariaDB data directory already exists. Skipping initialization.
+mariadb  | 2025-11-25 10:22:37 0 [Note] Starting MariaDB 10.11.14-MariaDB-0+deb12u2 source revision 053f9bcb5b147bf00edb99e1310bae9125b7f125 server_uid QZvgLl7+alRHxBi0no4qo8fXac8= as process 1
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: Compressed tables use zlib 1.2.13
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: Number of transaction pools: 1
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+mariadb  | 2025-11-25 10:22:37 0 [Note] mysqld: O_TMPFILE is not supported on /tmp (disabling future attempts)
+mariadb  | 2025-11-25 10:22:37 0 [Warning] mysqld: io_uring_queue_init() failed with EPERM: sysctl kernel.io_uring_disabled has the value 2, or 1 and the user of the process is not a member of sysctl kernel.io_uring_group. (see man 2 io_uring_setup).
+mariadb  | create_uring failed: falling back to libaio
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: native AIO failed: falling back to innodb_use_native_aio=OFF
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: Completed initialization of buffer pool
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: File system buffers for log disabled (block size=512 bytes)
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: End of log at LSN=46980
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: 128 rollback segments are active.
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: log sequence number 46980; transaction id 14
+mariadb  | 2025-11-25 10:22:37 0 [Note] Plugin 'FEEDBACK' is disabled.
+mariadb  | 2025-11-25 10:22:37 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+mariadb  | 2025-11-25 10:22:37 0 [Warning] You need to use --log-bin to make --expire-logs-days or --binlog-expire-logs-seconds work.
+mariadb  | 2025-11-25 10:22:37 0 [Note] Server socket created on IP: '0.0.0.0', port: '3306'.
+mariadb  | 2025-11-25 10:22:37 0 [ERROR] Can't start server : Bind on unix socket: No such file or directory
+mariadb  | 2025-11-25 10:22:37 0 [ERROR] Do you already have another server running on socket: /run/mysqld/mysqld.sock ?
+mariadb  | 2025-11-25 10:22:37 0 [ERROR] Aborting
+mariadb  | MariaDB data directory already exists. Skipping initialization.
+mariadb  | 2025-11-25 10:22:39 0 [Note] Starting MariaDB 10.11.14-MariaDB-0+deb12u2 source revision 053f9bcb5b147bf00edb99e1310bae9125b7f125 server_uid ivd7e3Zg1WXIVc8TYtH99tbgnd0= as process 1
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: Compressed tables use zlib 1.2.13
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: Number of transaction pools: 1
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+mariadb  | 2025-11-25 10:22:39 0 [Note] mysqld: O_TMPFILE is not supported on /tmp (disabling future attempts)
+mariadb  | 2025-11-25 10:22:39 0 [Warning] mysqld: io_uring_queue_init() failed with EPERM: sysctl kernel.io_uring_disabled has the value 2, or 1 and the user of the process is not a member of sysctl kernel.io_uring_group. (see man 2 io_uring_setup).
+mariadb  | create_uring failed: falling back to libaio
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: native AIO failed: falling back to innodb_use_native_aio=OFF
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: Completed initialization of buffer pool
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: File system buffers for log disabled (block size=512 bytes)
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: End of log at LSN=46980
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: 128 rollback segments are active.
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: log sequence number 46980; transaction id 14
+mariadb  | 2025-11-25 10:22:39 0 [Note] Plugin 'FEEDBACK' is disabled.
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+mariadb  | 2025-11-25 10:22:39 0 [Note] InnoDB: Buffer pool(s) load completed at 251125 10:22:39
+mariadb  | 2025-11-25 10:22:39 0 [Warning] You need to use --log-bin to make --expire-logs-days or --binlog-expire-logs-seconds work.
+mariadb  | 2025-11-25 10:22:39 0 [Note] Server socket created on IP: '0.0.0.0', port: '3306'.
+mariadb  | 2025-11-25 10:22:39 0 [ERROR] Can't start server : Bind on unix socket: No such file or directory
+mariadb  | 2025-11-25 10:22:39 0 [ERROR] Do you already have another server running on socket: /run/mysqld/mysqld.sock ?
+mariadb  | 2025-11-25 10:22:39 0 [ERROR] Aborting
+mariadb  | MariaDB data directory already exists. Skipping initialization.
+mariadb  | 2025-11-25 10:22:43 0 [Note] Starting MariaDB 10.11.14-MariaDB-0+deb12u2 source revision 053f9bcb5b147bf00edb99e1310bae9125b7f125 server_uid zoY6CYVMwMN6wUUC/ElVmmWn1hM= as process 1
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: Compressed tables use zlib 1.2.13
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: Number of transaction pools: 1
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+mariadb  | 2025-11-25 10:22:43 0 [Note] mysqld: O_TMPFILE is not supported on /tmp (disabling future attempts)
+mariadb  | 2025-11-25 10:22:43 0 [Warning] mysqld: io_uring_queue_init() failed with EPERM: sysctl kernel.io_uring_disabled has the value 2, or 1 and the user of the process is not a member of sysctl kernel.io_uring_group. (see man 2 io_uring_setup).
+mariadb  | create_uring failed: falling back to libaio
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: native AIO failed: falling back to innodb_use_native_aio=OFF
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: Completed initialization of buffer pool
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: File system buffers for log disabled (block size=512 bytes)
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: End of log at LSN=46980
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: 128 rollback segments are active.
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: log sequence number 46980; transaction id 14
+mariadb  | 2025-11-25 10:22:43 0 [Note] Plugin 'FEEDBACK' is disabled.
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+mariadb  | 2025-11-25 10:22:43 0 [Warning] You need to use --log-bin to make --expire-logs-days or --binlog-expire-logs-seconds work.
+mariadb  | 2025-11-25 10:22:43 0 [Note] InnoDB: Buffer pool(s) load completed at 251125 10:22:43
+mariadb  | 2025-11-25 10:22:43 0 [Note] Server socket created on IP: '0.0.0.0', port: '3306'.
+mariadb  | 2025-11-25 10:22:43 0 [ERROR] Can't start server : Bind on unix socket: No such file or directory
+mariadb  | 2025-11-25 10:22:43 0 [ERROR] Do you already have another server running on socket: /run/mysqld/mysqld.sock ?
+mariadb  | 2025-11-25 10:22:43 0 [ERROR] Aborting
+mariadb  | MariaDB data directory already exists. Skipping initialization.
+mariadb  | 2025-11-25 10:22:51 0 [Note] Starting MariaDB 10.11.14-MariaDB-0+deb12u2 source revision 053f9bcb5b147bf00edb99e1310bae9125b7f125 server_uid Gx+AkNgx8sdIn8kVThtCPD+7yTg= as process 1
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: Compressed tables use zlib 1.2.13
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: Number of transaction pools: 1
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+mariadb  | 2025-11-25 10:22:51 0 [Note] mysqld: O_TMPFILE is not supported on /tmp (disabling future attempts)
+mariadb  | 2025-11-25 10:22:51 0 [Warning] mysqld: io_uring_queue_init() failed with EPERM: sysctl kernel.io_uring_disabled has the value 2, or 1 and the user of the process is not a member of sysctl kernel.io_uring_group. (see man 2 io_uring_setup).
+mariadb  | create_uring failed: falling back to libaio
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: native AIO failed: falling back to innodb_use_native_aio=OFF
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: Completed initialization of buffer pool
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: File system buffers for log disabled (block size=512 bytes)
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: End of log at LSN=46980
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: 128 rollback segments are active.
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: log sequence number 46980; transaction id 14
+mariadb  | 2025-11-25 10:22:51 0 [Note] Plugin 'FEEDBACK' is disabled.
+mariadb  | 2025-11-25 10:22:51 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+mariadb  | 2025-11-25 10:22:51 0 [Warning] You need to use --log-bin to make --expire-logs-days or --binlog-expire-logs-seconds work.
+mariadb  | 2025-11-25 10:22:51 0 [Note] Server socket created on IP: '0.0.0.0', port: '3306'.
+mariadb  | 2025-11-25 10:22:51 0 [ERROR] Can't start server : Bind on unix socket: No such file or directory
+mariadb  | 2025-11-25 10:22:51 0 [ERROR] Do you already have another server running on socket: /run/mysqld/mysqld.sock ?
+mariadb  | 2025-11-25 10:22:51 0 [ERROR] Aborting
+mariadb  | MariaDB data directory already exists. Skipping initialization.
+mariadb  | 2025-11-25 10:23:05 0 [Note] Starting MariaDB 10.11.14-MariaDB-0+deb12u2 source revision 053f9bcb5b147bf00edb99e1310bae9125b7f125 server_uid yJGLKNeyJg6nLN8vtQHpj3uRw7A= as process 1
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: Compressed tables use zlib 1.2.13
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: Number of transaction pools: 1
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+mariadb  | 2025-11-25 10:23:05 0 [Note] mysqld: O_TMPFILE is not supported on /tmp (disabling future attempts)
+mariadb  | 2025-11-25 10:23:05 0 [Warning] mysqld: io_uring_queue_init() failed with EPERM: sysctl kernel.io_uring_disabled has the value 2, or 1 and the user of the process is not a member of sysctl kernel.io_uring_group. (see man 2 io_uring_setup).
+mariadb  | create_uring failed: falling back to libaio
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: native AIO failed: falling back to innodb_use_native_aio=OFF
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: Completed initialization of buffer pool
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: File system buffers for log disabled (block size=512 bytes)
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: End of log at LSN=46980
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: 128 rollback segments are active.
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: log sequence number 46980; transaction id 14
+mariadb  | 2025-11-25 10:23:05 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+mariadb  | 2025-11-25 10:23:05 0 [Note] Plugin 'FEEDBACK' is disabled.
+mariadb  | 2025-11-25 10:23:05 0 [Warning] You need to use --log-bin to make --expire-logs-days or --binlog-expire-logs-seconds work.
+mariadb  | 2025-11-25 10:23:05 0 [Note] Server socket created on IP: '0.0.0.0', port: '3306'.
+mariadb  | 2025-11-25 10:23:05 0 [ERROR] Can't start server : Bind on unix socket: No such file or directory
+mariadb  | 2025-11-25 10:23:05 0 [ERROR] Do you already have another server running on socket: /run/mysqld/mysqld.sock ?
+mariadb  | 2025-11-25 10:23:05 0 [ERROR] Aborting
+mariadb  | MariaDB data directory already exists. Skipping initialization.
+mariadb  | 2025-11-25 10:23:32 0 [Note] Starting MariaDB 10.11.14-MariaDB-0+deb12u2 source revision 053f9bcb5b147bf00edb99e1310bae9125b7f125 server_uid zj3wAqQpaRMO4PV4pwAiouxvOLI= as process 1
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: Compressed tables use zlib 1.2.13
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: Number of transaction pools: 1
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+mariadb  | 2025-11-25 10:23:32 0 [Note] mysqld: O_TMPFILE is not supported on /tmp (disabling future attempts)
+mariadb  | 2025-11-25 10:23:32 0 [Warning] mysqld: io_uring_queue_init() failed with EPERM: sysctl kernel.io_uring_disabled has the value 2, or 1 and the user of the process is not a member of sysctl kernel.io_uring_group. (see man 2 io_uring_setup).
+mariadb  | create_uring failed: falling back to libaio
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: native AIO failed: falling back to innodb_use_native_aio=OFF
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: innodb_buffer_pool_size_max=128m, innodb_buffer_pool_size=128m
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: Completed initialization of buffer pool
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: File system buffers for log disabled (block size=512 bytes)
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: End of log at LSN=46980
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: 128 rollback segments are active.
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: log sequence number 46980; transaction id 14
+mariadb  | 2025-11-25 10:23:32 0 [Note] Plugin 'FEEDBACK' is disabled.
+mariadb  | 2025-11-25 10:23:32 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+mariadb  | 2025-11-25 10:23:33 0 [Warning] You need to use --log-bin to make --expire-logs-days or --binlog-expire-logs-seconds work.
+mariadb  | 2025-11-25 10:23:33 0 [Note] InnoDB: Buffer pool(s) load completed at 251125 10:23:33
+mariadb  | 2025-11-25 10:23:33 0 [Note] Server socket created on IP: '0.0.0.0', port: '3306'.
+mariadb  | 2025-11-25 10:23:33 0 [ERROR] Can't start server : Bind on unix socket: No such file or directory
+mariadb  | 2025-11-25 10:23:33 0 [ERROR] Do you already have another server running on socket: /run/mysqld/mysqld.sock ?
+mariadb  | 2025-11-25 10:23:33 0 [ERROR] Aborting

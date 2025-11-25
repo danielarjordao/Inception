@@ -1,68 +1,82 @@
 services:
-
-  mariadb:
-    # Nome fixo do container
-    container_name: mariadb
-
-    # Construção da imagem a partir do Dockerfile local
-    build:
-      context: ./requirements/mariadb
-      dockerfile: Dockerfile
-
-    # Usa a imagem personalizada do MariaDB
-    image: mariadb
-
-    # Reinicia automaticamente em caso de falha
-    restart: always
-
-    # O MariaDB não expõe porta para fora.
-    # Apenas serviços da mesma rede Docker (ex: WordPress) podem acessá-lo.
+  # Nginx web server (reverse proxy and SSL termination)
+  nginx:
+    build: requirements/nginx/.
+    container_name: nginx
+    hostname: nginx
+    restart: on-failure
+    env_file:
+      - .env
+    ports:
+      - "443:443"  # HTTPS port exposed to host
+    depends_on:
+      - wordpress  # Wait for WordPress before starting
+    volumes:
+      - wordpress:/var/www/html  # Share WordPress files
     networks:
       - inception
 
-    # Volume persistente para salvar os dados do banco
-    volumes:
-      - mariadb_data:/var/lib/mysql
-
-
-    # Variáveis de ambiente usadas pelo script de inicialização
-    environment:
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-
-    # Uso de secrets para maior segurança das senhas
+  # WordPress with PHP-FPM
+  wordpress:
+    build: requirements/wordpress/.
+    container_name: wordpress
+    restart: on-failure
+    env_file:
+      - .env
     secrets:
-      - db_password
-      - db_root_password
+      - db_pass         # Database password
+      - wp_admin_pass   # WordPress admin password
+      - wp_user_pass    # WordPress second user password
+    expose:
+      - "9000"  # PHP-FPM port (internal only)
+    depends_on:
+      - mariadb  # Wait for database before starting
+    volumes:
+      - wordpress:/var/www/html  # Persistent WordPress files
+    networks:
+      - inception
 
+  # MariaDB database server
+  mariadb:
+    build: requirements/mariadb/.
+    container_name: mariadb
+    restart: on-failure
+    env_file:
+      - .env
+    secrets:
+      - db_pass  # Database password
+    expose:
+      - "3306"  # MySQL port (internal only)
+    volumes:
+      - mariadb:/var/lib/mysql  # Persistent database files
+    networks:
+      - inception
 
-# Volumes persistentes (guardar dados fora dos containers)
-# Esses diretórios ficam no host, em /home/login/data/, conforme o subject exige.
-volumes:
+# Docker secrets (secure password storage)
+secrets:
+  db_pass:
+    file: ../secrets/db_pass.txt
+  wp_admin_pass:
+    file: ../secrets/wp_admin_pass.txt
+  wp_user_pass:
+    file: ../secrets/wp_user_pass.txt
 
-  # Volume onde ficarão os arquivos do WordPress (plugins, temas, uploads)
-  wordpress_data:
-    driver: local
-    driver_opts:
-      # Bind-mount: conecta um diretório real do host
-      type: none
-      o: bind
-      device: /home/dramos-j/data/wordpress
-
-  # Volume onde o MariaDB salva o banco de dados
-  mariadb_data:
-    driver: local
-    driver_opts:
-      # Bind-mount: conecta um diretório real do host
-      type: none
-      o: bind
-      device: /home/dramos-j/data/mariadb
-
-
-# Rede interna dos containers (NGINX - WordPress - MariaDB)
+# Network for inter-container communication
 networks:
   inception:
-    # Rede isolada acessível somente entre os serviços do projeto
     driver: bridge
+
+# Persistent volumes mapped to host directories
+volumes:
+  wordpress:
+    name: wordpress
+    driver_opts:
+      device: ${DATA_PATH}/wordpress
+      o: bind
+      type: none
+  mariadb:
+    name: mariadb
+    driver_opts:
+      device: ${DATA_PATH}/mariadb
+      o: bind
+      type: none

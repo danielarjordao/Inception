@@ -1,0 +1,22 @@
+docker compose -f ./srcs/docker-compose.yml ps
+NAME        IMAGE            COMMAND                  SERVICE     CREATED          STATUS                                  PORTS
+mariadb     srcs-mariadb     "/usr/local/bin/mari…"   mariadb     10 seconds ago   Restarting (1) Less than a second ago   
+nginx       srcs-nginx       "nginx -g 'daemon of…"   nginx       9 seconds ago    Up 6 seconds                            0.0.0.0:443->443/tcp, [::]:443->443/tcp
+wordpress   srcs-wordpress   "/usr/local/bin/wp_e…"   wordpress   9 seconds ago    Up 8 seconds                            9000/tcp
+docker image ls
+                                                               Info ->  U In Use
+IMAGE                   ID             DISK USAGE   CONTENT SIZE   EXTRA
+srcs-mariadb:latest     7c4a3f95bc3f        601MB          112MB   U    
+srcs-nginx:latest       b35b39b93501        173MB         49.8MB   U    
+srcs-wordpress:latest   c76e27d92558        714MB          183MB   U    
+docker volume ls
+DRIVER    VOLUME NAME
+local     mariadb
+local     srcs_mariadb_data
+local     wordpress
+docker network ls
+NETWORK ID     NAME             DRIVER    SCOPE
+7473f31b9bf3   bridge           bridge    local
+091192b8d891   host             host      local
+2cd2fc437033   none             null      local
+76b9c3c04a36   srcs_inception   bridge    local
