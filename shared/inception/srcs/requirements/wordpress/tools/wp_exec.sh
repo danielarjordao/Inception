@@ -5,8 +5,8 @@ set -e
 
 # Read passwords from Docker secrets
 DB_PASSWORD=$(cat /run/secrets/db_pass)
-WP_ADMIN_PASS=$(cat /run/secrets/wp_admin_pass)
-WP_USER_PASS=$(cat /run/secrets/wp_user_pass)
+admin_pass_wp=$(cat /run/secrets/admin_pass_wp)
+user_pass_wp=$(cat /run/secrets/user_pass_wp)
 
 # If WordPress files not in volume, copy from staging directory
 if ! [ -e "/var/www/html/wp-includes/version.php" ]; then
@@ -68,7 +68,7 @@ if ! gosu www-data wp core is-installed --path=/var/www/html 2>&1; then
         --url="$WP_URL" \
         --title="$WP_SITE_TITLE" \
         --admin_user="$WP_ADMIN_NAME" \
-        --admin_password="$WP_ADMIN_PASS" \
+        --admin_password="$admin_pass_wp" \
         --admin_email="$WP_ADMIN_EMAIL" \
         --path=/var/www/html 2>&1; then
         echo "WordPress installed successfully."
@@ -81,7 +81,7 @@ if ! gosu www-data wp core is-installed --path=/var/www/html 2>&1; then
     # If second user doesn't exist, create it
     if ! gosu www-data wp user get "$WP_USER_NAME" --field=ID --path=/var/www/html 2>/dev/null; then
         gosu www-data wp user create "$WP_USER_NAME" "$WP_USER_EMAIL" \
-            --user_pass="$WP_USER_PASS" \
+            --user_pass="$user_pass_wp" \
             --role="$WP_USER_ROLE" \
             --path=/var/www/html
     fi

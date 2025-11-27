@@ -226,11 +226,11 @@ docker compose ps
 **Admin:**
 - URL: `https://dramos-j.42.fr/wp-admin`
 - Usuário: `dramos-j`
-- Senha: (executar `cat secrets/wp_admin_pass.txt`)
+- Senha: (executar `cat secrets/admin_pass_wp.txt`)
 
 **Usuário Comum:**
 - Usuário: `common_user`
-- Senha: (executar `cat secrets/wp_user_pass.txt`)
+- Senha: (executar `cat secrets/user_pass_wp.txt`)
 
 ---
 
@@ -277,9 +277,9 @@ make re
 .
 ├── Makefile
 ├── secrets/
-│   ├── db_pass.txt
-│   ├── wp_admin_pass.txt
-│   └── wp_user_pass.txt
+│   ├── pass_mariadb.txt
+│   ├── admin_pass_wp.txt
+│   └── user_pass_wp.txt
 └── srcs/
     ├── docker-compose.yml
     ├── .env

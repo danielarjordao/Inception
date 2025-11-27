@@ -19,12 +19,14 @@ https://cdimage.debian.org/cdimage/archive/12.12.0/amd64/iso-cd/debian-12.12.0-a
 - **[ ] Proceed with Unattended Installation** desmarcado, pois faremos a instalação manualmente, confirmando a instalação apenas do necessário.
 
 ## 2.2 Hardware
-> **Recursos mínimos:** Docker precisa de recursos adequados. 4GB RAM é o mínimo recomendado para rodar múltiplos containers simultaneamente. 2 CPUs permitem melhor performance na build de imagens. 20GB é suficiente para o sistema base + Docker + imagens do projeto.
 
-- **Base Memory:** **4096 MB**
+**Configuração para GNOME:**
+- **Base Memory:** **5120 MB (5GB)**
 - **Number of CPUs:** **2**
-- **Disk Size:** **20 GB**
-- **[ ] Enable EFI** desmarcado, pois o Debian 12.12 funciona bem com BIOS tradicional e evita complicações desnecessárias.
+- **Disk Size:** **25-30 GB**
+- **[ ] Enable EFI** desmarcado
+
+> **Por quê 5GB?** GNOME é um desktop environment completo e moderno que consome ~2.5-3GB de RAM. Com Docker rodando múltiplos containers, 5GB garante performance adequada sem travamentos.
 
 Confirmar configurações no summary e clicar em **Terminar**.
 
@@ -63,10 +65,13 @@ Confirmar configurações no summary e clicar em **Terminar**.
   > Não é necessário configurar proxy para este ambiente simples.
 - **Configuring popularity contest:** No
 - **Software selection**
-  > **Instalação minimalista:** Selecionamos apenas o essencial. SSH server permite acesso remoto e desenvolvimento confortável. Desktop environment NÃO é necessário e consumiria recursos.
-- - **Selecionar apenas:**
+  > **Instalação GNOME:** GNOME é um desktop environment completo e moderno, perfeito para desenvolvimento. Já inclui GNOME Web (navegador) e todas as ferramentas necessárias.
+- - **Selecionar:**
+- - - Debian desktop environment
+- - - - **GNOME** (marcar apenas este)
 - - - SSH server
 - - - Standard system utilities
+  > **Importante:** Desmarque outros ambientes desktop (XFCE, KDE, Cinnamon, etc.) para evitar conflitos.
 - **Install the GRUB boot loader to your primary drive:** Yes
 - - **Device for boot loader installation:** /dev/sda
 - - **Finish the installation:** Continue to reboot
@@ -168,6 +173,30 @@ Escrever algo no arquivo `teste_pc.txt` dentro da pasta compartilhada no host e 
 cat /media/sf_shared/teste_pc.txt
 ```
 
+# 6.5 Checklist de Verificação do Ambiente GUI
+
+Antes de prosseguir com Docker, verifique se tudo está funcionando:
+
+**✓ Interface Gráfica:**
+- [ ] Desktop (XFCE ou GNOME) carrega corretamente após login
+- [ ] Mouse e teclado funcionam suavemente (sem lag)
+- [ ] Resolução de tela ajusta automaticamente ao redimensionar janela
+
+**✓ Guest Additions:**
+- [ ] `lsmod | grep vbox` mostra vboxguest, vboxsf, vboxvideo
+- [ ] Copiar/colar funciona entre host e VM
+- [ ] Arrastar arquivos funciona entre host e VM
+
+**✓ Pasta Compartilhada:**
+- [ ] `/media/sf_shared` existe e é acessível
+- [ ] Arquivos criados na VM aparecem no host
+- [ ] Arquivos criados no host aparecem na VM
+
+**✓ Navegador:**
+- [ ] Consegue navegar em páginas web básicas
+
+> **Nota:** Se algum item não funciona, revise os passos anteriores antes de continuar.
+
 # 7. Preparar Sistema para Docker e Docker Compose
 
 > **Preparação completa:** Instalamos Docker oficial do repositório Docker (mais atualizado que o do Debian) e todas as ferramentas necessárias para desenvolvimento e build do projeto.
@@ -237,7 +266,7 @@ docker ps
 
 ```
 sudo usermod -aG docker dramos-j
-newgrp docker
+sudo reboot
 ```
 
 ## 7.9 Testar comandos básicos do Docker
