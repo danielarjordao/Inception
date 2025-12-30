@@ -383,6 +383,57 @@ docker compose logs nginx
 
 **SEU PROJETO ESTÁ 100% CONFORME O SUBJECT!**
 
+---
+
+## 🔄 COMO ALTERAR A PORTA PARA A AVALIAÇÃO
+
+Caso o avaliador solicite que o WordPress/Nginx rode em uma porta diferente da 443, siga o passo a passo abaixo:
+
+> **Atenção:** Quando usar uma porta diferente da 443, **sempre inclua a porta na URL** ao acessar pelo navegador, curl ou qualquer outro método. Exemplo: `https://dramos-j.42.fr:8443`
+
+### 1. Escolha a nova porta
+Exemplo: `8443`
+
+### 2. Edite o arquivo `docker-compose.yml`
+No arquivo `srcs/docker-compose.yml`, localize o serviço `nginx` e altere o mapeamento de portas:
+
+```
+services:
+   nginx:
+      # ...
+      ports:
+         - "8443:443"  # Altere aqui: <porta_nova>:443
+```
+
+### 3. (Opcional) Edite configurações do Nginx
+Se o Nginx estiver configurado para escutar apenas na porta 443, edite o arquivo `srcs/requirements/nginx/conf/nginx.conf` ou `dramos-j.42.fr.conf` para garantir que a diretiva `listen` inclua a porta 443 (não precisa mudar para 8443, pois o mapeamento já faz a tradução). Normalmente **NÃO é necessário alterar nada aqui**.
+
+### 4. Reinicie os containers
+Execute:
+```bash
+cd srcs
+docker compose down
+docker compose up -d --build
+```
+
+### 5. Acesse pelo navegador
+
+No navegador, acesse (incluindo a porta):
+```
+https://dramos-j.42.fr:8443
+```
+**Não esqueça de informar a porta na URL!**
+Se for solicitado, aceite o aviso de certificado SSL.
+
+### 6. (Opcional) Teste com curl
+
+```bash
+curl -k https://dramos-j.42.fr:8443
+```
+**Sempre inclua a porta no comando acima!**
+
+---
+
 Todos os requisitos obrigatórios foram implementados:
 - ✅ Virtual Machine com Docker
 - ✅ Docker Compose orquestrando serviços
