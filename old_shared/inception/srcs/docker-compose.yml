@@ -1,0 +1,82 @@
+services:
+  # Nginx web server (reverse proxy and SSL termination)
+  nginx:
+    build: requirements/nginx/.
+    container_name: nginx
+    hostname: nginx
+    restart: on-failure
+    env_file:
+      - .env
+    ports:
+      - "443:443"  # HTTPS port exposed to host
+    depends_on:
+      - wordpress  # Wait for WordPress before starting
+    volumes:
+      - wordpress:/var/www/html  # Share WordPress files
+    networks:
+      - inception
+
+  # WordPress with PHP-FPM
+  wordpress:
+    build: requirements/wordpress/.
+    container_name: wordpress
+    restart: on-failure
+    env_file:
+      - .env
+    secrets:
+      - db_pass         # Database password
+      - admin_pass_wp   # WordPress admin password
+      - user_pass_wp    # WordPress second user password
+    expose:
+      - "9000"  # PHP-FPM port (internal only)
+    depends_on:
+      - mariadb  # Wait for database before starting
+    volumes:
+      - wordpress:/var/www/html  # Persistent WordPress files
+    networks:
+      - inception
+
+  # MariaDB database server
+  mariadb:
+    build: requirements/mariadb/.
+    container_name: mariadb
+    restart: on-failure
+    env_file:
+      - .env
+    secrets:
+      - db_pass  # Database password
+    expose:
+      - "3306"  # MySQL port (internal only)
+    volumes:
+      - mariadb:/var/lib/mysql  # Persistent database files
+    networks:
+      - inception
+
+# Docker secrets (secure password storage)
+secrets:
+  db_pass:
+    file: ../secrets/pass_mariadb.txt
+  admin_pass_wp:
+    file: ../secrets/admin_pass_wp.txt
+  user_pass_wp:
+    file: ../secrets/user_pass_wp.txt
+
+# Network for inter-container communication
+networks:
+  inception:
+    driver: bridge
+
+# Persistent volumes mapped to host directories
+volumes:
+  wordpress:
+    name: wordpress
+    driver_opts:
+      device: ${DATA_PATH}/wordpress
+      o: bind
+      type: none
+  mariadb:
+    name: mariadb
+    driver_opts:
+      device: ${DATA_PATH}/mariadb
+      o: bind
+      type: none
