@@ -2,7 +2,7 @@
 
 ## ✅ STATUS DO PROJETO: 100% COMPLETO E FUNCIONAL
 
----
+
 
 ## 📊 CONFORMIDADE COM O SUBJECT:
 
@@ -47,7 +47,7 @@
 ✅ **PID 1 correto** - Processos daemon adequados
 ✅ **Sem tag latest** - Versões específicas
 
----
+
 
 ## 🌐 COMO ACESSAR O WORDPRESS:
 
@@ -89,7 +89,7 @@ ssh -X dramos-j@10.12.248.36
 firefox https://dramos-j.42.fr &
 ```
 
----
+
 
 ## 🔐 AVISO DE CERTIFICADO SSL
 
@@ -99,7 +99,7 @@ Ao acessar, você verá um aviso de segurança. Isso é **NORMAL** porque o cert
 1. Clique em **"Avançado"**
 2. Clique em **"Continuar para dramos-j.42.fr (não seguro)"** ou **"Aceitar o risco"**
 
----
+
 
 ## 📋 CHECKLIST PARA AVALIAÇÃO:
 
@@ -219,7 +219,7 @@ docker compose ps
 # Nginx deve estar UP novamente
 ```
 
----
+
 
 ## 🎓 CREDENCIAIS DO WORDPRESS:
 
@@ -232,7 +232,7 @@ docker compose ps
 - Usuário: `common_user`
 - Senha: (executar `cat secrets/user_pass_wp.txt`)
 
----
+
 
 ## 🚨 COMANDOS ÚTEIS:
 
@@ -269,7 +269,7 @@ make re
 # Down + clean + build + up
 ```
 
----
+
 
 ## 📂 ESTRUTURA DE DIRETÓRIOS ESPERADA:
 
@@ -304,7 +304,7 @@ make re
                 └── wp_exec.sh
 ```
 
----
+
 
 ## 🏆 PONTOS IMPORTANTES PARA AVALIAÇÃO:
 
@@ -333,7 +333,7 @@ make re
 ❌ Admin com nome contendo 'admin', 'Admin', 'administrator'
 ❌ Secrets commitados no git
 
----
+
 
 ## 📞 DURANTE A AVALIAÇÃO:
 
@@ -377,13 +377,13 @@ docker compose logs wordpress
 docker compose logs nginx
 ```
 
----
+
 
 ## ✅ RESULTADO FINAL:
 
 **SEU PROJETO ESTÁ 100% CONFORME O SUBJECT!**
 
----
+
 
 ## 🔄 COMO ALTERAR A PORTA PARA A AVALIAÇÃO
 
@@ -432,7 +432,7 @@ curl -k https://dramos-j.42.fr:8443
 ```
 **Sempre inclua a porta no comando acima!**
 
----
+
 
 Todos os requisitos obrigatórios foram implementados:
 - ✅ Virtual Machine com Docker
@@ -446,6 +446,6 @@ Todos os requisitos obrigatórios foram implementados:
 - ✅ Senhas protegidas
 - ✅ Estrutura de diretórios correta
 
----
+
 
 **BOA SORTE NA AVALIAÇÃO! 🚀**
