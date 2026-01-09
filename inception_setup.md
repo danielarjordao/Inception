@@ -2,7 +2,7 @@
 
 # 1. Baixar a ISO Debian 12.12
 
-> **Por quê Debian 12.12?** O subject do projeto Inception exige a penúltima versão estável para garantir compatibilidade e estabilidade. A versão netinst é mais leve e permite instalação minimalista.
+> **Por quê Debian 12.12?** O subject do projeto Inception exige a penúltima versão estável.
 
 https://cdimage.debian.org/cdimage/archive/12.12.0/amd64/iso-cd/debian-12.12.0-amd64-netinst.iso
 
@@ -16,7 +16,7 @@ https://cdimage.debian.org/cdimage/archive/12.12.0/amd64/iso-cd/debian-12.12.0-a
 - **OS Distribution:** seleciona a ISO baixada
 (`debian-12.12.0-amd64-netinst.iso`)
 - **OS Version:** Debian (64-bit)
-- **[ ] Proceed with Unattended Installation** desmarcado, pois faremos a instalação manualmente, confirmando a instalação apenas do necessário.
+- **[ ] Proceed with Unattended Installation** desmarcado, fazer instalação manual
 
 ## 2.2 Hardware
 
@@ -24,9 +24,8 @@ https://cdimage.debian.org/cdimage/archive/12.12.0/amd64/iso-cd/debian-12.12.0-a
 - **Base Memory:** **5120 MB (5GB)**
 - **Number of CPUs:** **2**
 - **Disk Size:** **25-30 GB**
-- **[ ] Enable EFI** desmarcado
+- **[ ] Enable EFI** desmarcado, não é necessário para este ambiente simples.
 
-> **Por quê 5GB?** GNOME é um desktop environment completo e moderno que consome ~2.5-3GB de RAM. Com Docker rodando múltiplos containers, 5GB garante performance adequada sem travamentos.
 
 Confirmar configurações no summary e clicar em **Terminar**.
 
@@ -48,7 +47,7 @@ Confirmar configurações no summary e clicar em **Terminar**.
 - - **Create a user**
 - - - **Full name:** Daniela Ramos Jordao
 - - - **Username:** dramos-j
-- - - **Password:** segura
+- - - **Password:** pass-123
 - **Configure the clock:** Lisbon
 - **Partition disks**
 - - **Partitioning method:** Guided - use entire disk
@@ -56,7 +55,6 @@ Confirmar configurações no summary e clicar em **Terminar**.
 - - **Partitioning scheme:** All files in one partition
 - - **Finish partitioning and write changes to disk:** Yes
 - - **Write changes to disks:** Yes
-  > Não é necessário particionar manualmente para este ambiente simples.
 - **Configure the package manager**
 - - **Scan extra installation media:** No
 - - **Debian archive mirror country:** Portugal
@@ -65,13 +63,12 @@ Confirmar configurações no summary e clicar em **Terminar**.
   > Não é necessário configurar proxy para este ambiente simples.
 - **Configuring popularity contest:** No
 - **Software selection**
-  > **Instalação GNOME:** GNOME é um desktop environment completo e moderno, perfeito para desenvolvimento. Já inclui GNOME Web (navegador) e todas as ferramentas necessárias.
 - - **Selecionar:**
 - - - Debian desktop environment
-- - - - **GNOME** (marcar apenas este)
+- - - GNOME
 - - - SSH server
 - - - Standard system utilities
-  > **Importante:** Desmarque outros ambientes desktop (XFCE, KDE, Cinnamon, etc.) para evitar conflitos.
+  > **Importante:** Desmacar outros ambientes desktop (XFCE, KDE, Cinnamon, etc.) para evitar conflitos.
 - **Install the GRUB boot loader to your primary drive:** Yes
 - - **Device for boot loader installation:** /dev/sda
 - - **Finish the installation:** Continue to reboot
@@ -82,8 +79,15 @@ Login:
 
 ```
 login: dramos-j
-password: segura
+password: pass-123
 ```
+
+Configuracão inicial máquina:
+
+- Permitir copiar/colar entre host e VM
+- - Dispositivos → Área de Transferência Compartilhada → Bidirecional
+- Permitir arrastar arquivos entre host e VM
+- - Dispositivos → Arrastar e Soltar → Bidirecional
 
 Atualizar:
 
