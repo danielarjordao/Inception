@@ -1,21 +1,22 @@
 
-# Arquivos de ambiente (sempre privados)
+
+# Environment files (always private)
 .env
 srcs/.env
 
-# Segredos e senhas (nunca versionar)
+# Secrets and passwords (never version)
 secrets/*.txt
 secrets/
 
-# Volumes persistentes do Docker (dados do banco e WordPress)
+# Docker persistent volumes (database and WordPress data)
 data/
 /home/dramos-j/data/
 
-# Lixo de sistema/editor/VM
+# System/editor/VM junk files
 .DS_Store
 *.swp
 *.vdi
 *.log
 
-# Pastas temporárias de build do Docker
+# Temporary Docker build folders
 .docker/

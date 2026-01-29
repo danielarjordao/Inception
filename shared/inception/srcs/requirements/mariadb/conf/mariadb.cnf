@@ -1,13 +1,13 @@
 [mysqld]
 
-# Run MariaDB as mysql user for security
+# Run MariaDB as the mysql user (security best practice)
 user            = mysql
 
-# Port for MariaDB connections
+# MariaDB listens on this port
 port            = 3306
 
-# Listen on all network interfaces (allows connections from other containers)
+# Listen on all interfaces (enables container-to-container access)
 bind_address    = 0.0.0.0
 
-# Directory where database files are stored
+# Data directory for database files
 datadir         = /var/lib/mysql

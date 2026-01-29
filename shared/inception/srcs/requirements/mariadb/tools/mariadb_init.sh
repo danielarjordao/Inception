@@ -1,19 +1,19 @@
 #!/bin/bash
 
-# Exit immediately if a command fails
+# Exit immediately if any command fails
 set -e
 
-# Read database password from secret
+# Read database password from Docker secret
 DB_PASSWORD=$(cat /run/secrets/db_pass)
 
-# Initialize MariaDB data directory
+# Initialize MariaDB data directory if not already present
 if [ ! -d /var/lib/mysql/mysql ]; then
 	echo "MariaDB not initialized. Creating data directory..."
 
-	# Set ownership of data directory
+	# Set correct ownership for data directory
 	chown -R mysql:mysql /var/lib/mysql
 
-	# Set secure permissions (only mysql user can access)
+	# Restrict permissions to mysql user only
 	chmod 700 /var/lib/mysql
 
 	# Initialize MariaDB system tables
@@ -21,7 +21,7 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 
 	echo "MariaDB data directory initialized successfully."
 
-	# Start temporary MariaDB server in background
+	# Start MariaDB server in background for setup
 	mysqld --user=mysql --datadir=/var/lib/mysql &
 	MARIADB_PID=$!
 
@@ -29,22 +29,14 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 	echo "Waiting for MariaDB to start..."
 	sleep 10
 
-	# Create database and user
+	# Create database and user for WordPress
 	echo "Creating database and user..."
-
-	# Create database if not exists
 	mariadb -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
-
-	# Create user with password from secret
 	mariadb -e "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${DB_PASSWORD}';"
-
-	# Grant all privileges on database to user
 	mariadb -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO \`${MYSQL_USER}\`@'%';"
-
-	# Apply privilege changes
 	mariadb -e "FLUSH PRIVILEGES;"
 
-	# Shut down temporary server
+	# Shut down temporary MariaDB server
 	mysqladmin --user=root shutdown
 	wait $MARIADB_PID
 
@@ -53,6 +45,6 @@ else
 	echo "MariaDB data directory already exists. Skipping initialization."
 fi
 
-# exec replaces this script with mysqld as PID 1
+# Replace this script with mysqld as PID 1
 # "$@" passes the CMD from Dockerfile (gosu mysql mysqld)
 exec "$@"

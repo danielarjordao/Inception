@@ -1,26 +1,26 @@
 # Debian Bookworm (Debian 12) with PHP 8.2
 FROM debian:bookworm-slim
 
-# WordPress version to download
+# WordPress version to download (build argument)
 ARG WP_VERSION=6.7.1
 
 # Update package lists
 RUN apt update
 
-# Install PHP-FPM and extensions
+# Install PHP-FPM and required extensions
 RUN apt install -y --no-install-recommends \
 	php8.2-fpm \
 	php8.2-mysql \
 	php8.2-gd
 
-# Install tools needed for setup
+# Install setup tools
 RUN apt install -y --no-install-recommends \
 	ca-certificates \
 	wget \
 	tar \
 	rsync
 
-# Install gosu to run commands as www-data user
+# Install gosu to run as www-data user
 RUN apt install -y --no-install-recommends gosu
 
 # Install MariaDB client for wp-cli database management
@@ -32,11 +32,11 @@ RUN update-ca-certificates
 # Clean up package cache to reduce image size
 RUN apt clean && rm -rf /var/lib/apt/lists/*
 
-# Create WordPress directories
+# Create WordPress and staging directories
 RUN mkdir -p /var/www/html
 RUN mkdir -p /usr/src/wordpress
 
-# Download WordPress
+# Download WordPress archive
 RUN wget https://wordpress.org/wordpress-${WP_VERSION}.tar.gz -O wordpress.tar.gz
 
 # Extract WordPress to staging directory
@@ -58,13 +58,13 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 RUN mkdir -p /home/www-data/.wp-cli/cache
 RUN chown -R www-data:www-data /home/www-data/.wp-cli
 
-# Copy PHP-FPM configuration
+# Copy PHP-FPM pool configuration
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
-# Set working directory
+# Set working directory for container
 WORKDIR /var/www/html
 
-# Copy initialization script
+# Copy WordPress initialization script
 COPY ./tools/wp_exec.sh /usr/local/bin/wp_exec.sh
 
 # Make initialization script executable

@@ -1,0 +1,3 @@
+# Ignorar arquivos de subject a partir de agora
+en.subject*
+*.pdf

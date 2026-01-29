@@ -1,44 +1,44 @@
-# Debian Bookworm (Debian 12)
+# Minimal base image
 FROM debian:bookworm-slim
 
-# Update package lists
+# Update repositories
 RUN apt update
 
 # Install MariaDB server
 RUN apt install -y --no-install-recommends mariadb-server
 
-# Install gosu to run MariaDB under the mysql user
+# Install gosu to run as mysql user
 RUN apt install -y --no-install-recommends gosu
 
-# Clean up package cache to reduce image size
+# Clean apt cache for smaller image
 RUN apt clean && rm -rf /var/lib/apt/lists/*
 
-# Remove any pre-initialized data from the image
+# Remove any pre-existing database data
 RUN rm -rf /var/lib/mysql/*
 
-# Copy custom MariaDB configuration file
+# Copy custom MariaDB configuration
 COPY conf/mariadb.cnf /etc/mysql/mariadb.conf.d/
 
-# Set proper permissions for configuration file
+# Set read permission for config
 RUN chmod +r /etc/mysql/mariadb.conf.d/mariadb.cnf
 
-# Create directory for MariaDB socket
+# Create socket directory
 RUN mkdir -p /run/mysqld
 
-# Set ownership of socket directory to mysql user
+# Set correct permissions for socket
 RUN chown -R mysql:mysql /run/mysqld
 
-# Copy initialization script
+# Copy custom initialization script
 COPY tools/mariadb_init.sh /usr/local/bin/
 
-# Make initialization script executable
+# Make the script executable
 RUN chmod +x /usr/local/bin/mariadb_init.sh
 
-# Expose MariaDB port to allow external connections
+# Expose MariaDB default port
 EXPOSE 3306
 
-# Set the entrypoint to the custom initialization script
+# Custom entrypoint script
 ENTRYPOINT ["/usr/local/bin/mariadb_init.sh"]
 
-# Start MariaDB server as the mysql user using gosu
+# Default command: start MariaDB as mysql user
 CMD ["gosu", "mysql", "mysqld"]

@@ -1,61 +1,61 @@
-services: # Define os serviços do projeto
-  nginx: # Servidor web reverso com SSL
+services: # Define all project services
+  nginx: # Reverse proxy web server with SSL
     build:
-      context: requirements/nginx/. # Dockerfile customizado
+      context: requirements/nginx/. # Custom Dockerfile
       args:
-        DOMAIN_NAME: ${DOMAIN_NAME} # Domínio para SSL
-        USER: ${MYSQL_USER}         # UID para certificado
+        DOMAIN_NAME: ${DOMAIN_NAME} # Domain for SSL
+        USER: ${MYSQL_USER}         # UID for certificate
     image: nginx
     container_name: nginx
-    restart: on-failure # Reinicia se falhar
+    restart: on-failure # Restart if fails
     env_file:
-      - .env # Variáveis de ambiente
+      - .env # Environment variables
     ports:
       - "443:443" # HTTPS
     depends_on:
-      - wordpress # Só inicia após WordPress
+      - wordpress # Starts after WordPress
     volumes:
-      - wordpress:/var/www/html # Monta arquivos do WP
+      - wordpress:/var/www/html # Mounts WP files
     networks:
-      - inception # Rede dedicada
+      - inception # Dedicated network
 
-  wordpress: # CMS WordPress com PHP-FPM
-    build: requirements/wordpress/. # Dockerfile customizado
+  wordpress: # WordPress CMS with PHP-FPM
+    build: requirements/wordpress/. # Custom Dockerfile
     image: wordpress
     container_name: wordpress
     restart: on-failure
     env_file:
       - .env
     secrets:
-      - db_pass        # Senha do banco
-      - admin_pass_wp  # Senha admin WP
-      - user_pass_wp   # Senha user WP
+      - db_pass        # Database password
+      - admin_pass_wp  # WP admin password
+      - user_pass_wp   # WP user password
     expose:
-      - "9000" # Porta PHP-FPM
+      - "9000" # PHP-FPM port
     depends_on:
-      - mariadb # Só inicia após banco
+      - mariadb # Starts after database
     volumes:
       - wordpress:/var/www/html
     networks:
       - inception
 
-  mariadb: # Banco de dados MariaDB
-    build: requirements/mariadb/. # Dockerfile customizado
+  mariadb: # MariaDB database
+    build: requirements/mariadb/. # Custom Dockerfile
     image: mariadb
     container_name: mariadb
     restart: on-failure
     env_file:
       - .env
     secrets:
-      - db_pass # Senha root do banco
+      - db_pass # Root database password
     expose:
-      - "3306" # Porta padrão MariaDB
+      - "3306" # MariaDB default port
     volumes:
-      - mariadb:/var/lib/mysql # Persistência
+      - mariadb:/var/lib/mysql # Persistent data
     networks:
       - inception
 
-secrets: # Mapeia arquivos de senha para uso seguro
+secrets: # Maps password files for secure usage
   db_pass:
     file: ../secrets/pass_mariadb.txt
   admin_pass_wp:
@@ -64,17 +64,17 @@ secrets: # Mapeia arquivos de senha para uso seguro
     file: ../secrets/user_pass_wp.txt
 
 networks:
-  inception: # Rede bridge isolada
+  inception: # Isolated bridge network
     driver: bridge
 
 volumes:
-  wordpress: # Volume persistente para arquivos do WP
+  wordpress: # Persistent volume for WP files
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /home/dramos-j/data/wordpress
-  mariadb: # Volume persistente para dados do banco
+  mariadb: # Persistent volume for database data
     driver: local
     driver_opts:
       type: none
