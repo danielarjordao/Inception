@@ -480,8 +480,6 @@ make build
 make up
 ```
 
----
-
 ## Useful Commands During Development
 
 ```bash
