@@ -1,61 +1,61 @@
-services:
-  nginx:
+services: # Define os serviços do projeto
+  nginx: # Servidor web reverso com SSL
     build:
-      context: requirements/nginx/.
+      context: requirements/nginx/. # Dockerfile customizado
       args:
-        DOMAIN_NAME: ${DOMAIN_NAME}
-        USER: ${MYSQL_USER}
+        DOMAIN_NAME: ${DOMAIN_NAME} # Domínio para SSL
+        USER: ${MYSQL_USER}         # UID para certificado
     image: nginx
     container_name: nginx
-    restart: on-failure
+    restart: on-failure # Reinicia se falhar
     env_file:
-      - .env
+      - .env # Variáveis de ambiente
     ports:
-      - "443:443"
+      - "443:443" # HTTPS
     depends_on:
-      - wordpress
+      - wordpress # Só inicia após WordPress
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/html # Monta arquivos do WP
     networks:
-      - inception
+      - inception # Rede dedicada
 
-  wordpress:
-    build: requirements/wordpress/.
+  wordpress: # CMS WordPress com PHP-FPM
+    build: requirements/wordpress/. # Dockerfile customizado
     image: wordpress
     container_name: wordpress
     restart: on-failure
     env_file:
       - .env
     secrets:
-      - db_pass
-      - admin_pass_wp
-      - user_pass_wp
+      - db_pass        # Senha do banco
+      - admin_pass_wp  # Senha admin WP
+      - user_pass_wp   # Senha user WP
     expose:
-      - "9000"
+      - "9000" # Porta PHP-FPM
     depends_on:
-      - mariadb
+      - mariadb # Só inicia após banco
     volumes:
       - wordpress:/var/www/html
     networks:
       - inception
 
-  mariadb:
-    build: requirements/mariadb/.
+  mariadb: # Banco de dados MariaDB
+    build: requirements/mariadb/. # Dockerfile customizado
     image: mariadb
     container_name: mariadb
     restart: on-failure
     env_file:
       - .env
     secrets:
-      - db_pass
+      - db_pass # Senha root do banco
     expose:
-      - "3306"
+      - "3306" # Porta padrão MariaDB
     volumes:
-      - mariadb:/var/lib/mysql
+      - mariadb:/var/lib/mysql # Persistência
     networks:
       - inception
 
-secrets:
+secrets: # Mapeia arquivos de senha para uso seguro
   db_pass:
     file: ../secrets/pass_mariadb.txt
   admin_pass_wp:
@@ -64,17 +64,17 @@ secrets:
     file: ../secrets/user_pass_wp.txt
 
 networks:
-  inception:
+  inception: # Rede bridge isolada
     driver: bridge
 
 volumes:
-  wordpress:
+  wordpress: # Volume persistente para arquivos do WP
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /home/dramos-j/data/wordpress
-  mariadb:
+  mariadb: # Volume persistente para dados do banco
     driver: local
     driver_opts:
       type: none

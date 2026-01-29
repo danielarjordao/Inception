@@ -49,13 +49,11 @@ WP_USER_NAME=dramos-j
 WP_USER_ROLE=author
 ```
 
-
-
 ## Project Architecture
 
 ### Directory Structure
 
-```
+```console
 .
 ├── Makefile
 ├── secrets/
@@ -82,12 +80,14 @@ WP_USER_ROLE=author
 ### Services
 
 **NGINX:**
+
 - Base: `debian:bookworm-slim`
 - TLSv1.2 only, self-signed cert
 - Proxy to wordpress:9000 (FastCGI)
 - Exposes port 443
 
 **WordPress:**
+
 - Base: `debian:bookworm-slim`
 - WordPress 6.7.1 + PHP 8.2-FPM
 - WP-CLI for automation
@@ -95,6 +95,7 @@ WP_USER_ROLE=author
 - Uses `gosu` for privilege management
 
 **MariaDB:**
+
 - Base: `debian:bookworm-slim`
 - Conditional initialization
 - Temporary server for setup
@@ -108,8 +109,6 @@ WP_USER_ROLE=author
 - **Network**: Custom bridge `inception`
 - **Volumes**: Bind mounts to `/home/dramos-j/data/`
 - **PID 1**: `exec "$@"` in entrypoint scripts
-
-
 
 ## Building and Launching
 
@@ -143,8 +142,6 @@ docker compose logs -f
 # Stop
 docker compose down
 ```
-
-
 
 ## Container Management
 
@@ -190,14 +187,12 @@ docker inspect mariadb
 docker inspect wordpress | grep -A 10 Mounts
 ```
 
-
-
 ## Volumes and Data Persistence
 
 ### Data Locations
 
 | Service | Container Path | Host Path |
-|---------|---------------|-----------|
+| --------- | --------------- | ----------- |
 | MariaDB | `/var/lib/mysql` | `/home/dramos-j/data/mariadb` |
 | WordPress | `/var/www/html` | `/home/dramos-j/data/wordpress` |
 
@@ -236,12 +231,11 @@ volumes:
 ```
 
 Bind mounts used (not Docker volumes) for:
+
 - Easy access from host
 - Standard backup tools
 - Explicit data location
 - Subject requirement
-
-
 
 ## Network Configuration
 
@@ -268,29 +262,31 @@ networks:
 ```
 
 Containers communicate via service names:
+
 - `nginx` → `wordpress:9000`
 - `wordpress` → `mariadb:3306`
 
 Only NGINX port 443 exposed to host.
-
-
 
 ## Development Workflow
 
 ### Making Changes
 
 **1. Modify configuration:**
+
 ```bash
 vim srcs/requirements/nginx/conf/nginx.conf
 ```
 
 **2. Rebuild:**
+
 ```bash
 docker compose build nginx
 docker compose up -d nginx
 ```
 
 **3. Verify:**
+
 ```bash
 docker logs nginx
 ```
@@ -308,8 +304,6 @@ docker exec wordpress wp --info
 docker exec mariadb mysql -u dramos-j -p$(cat secrets/pass_mariadb.txt) \
   -e "SELECT VERSION();"
 ```
-
-
 
 ## Implementation Details
 
@@ -349,8 +343,6 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 Config uses `ssl_protocols TLSv1.2;` only.
 
-
-
 ## Troubleshooting
 
 ### Build Issues
@@ -388,11 +380,10 @@ sudo chown -R www-data:www-data /home/dramos-j/data/wordpress/
 sudo chown -R 999:999 /home/dramos-j/data/mariadb/
 ```
 
-
-
 ## Subject Compliance
 
 **Required:**
+
 - ✅ Virtual machine
 - ✅ Docker Compose
 - ✅ Custom Dockerfiles (one per service)
@@ -413,11 +404,10 @@ sudo chown -R 999:999 /home/dramos-j/data/mariadb/
 - ✅ Domain: `login.42.fr`
 
 **Prohibited:**
+
 - ❌ No `tail -f`, `sleep infinity`, `while true`
 - ❌ No passwords in Dockerfiles
 - ❌ No pulling ready-made images (except base)
 - ❌ No `latest` tags
-
-
 
 For user instructions, see [USER_DOC.md](USER_DOC.md).

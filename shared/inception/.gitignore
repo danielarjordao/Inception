@@ -1,20 +1,21 @@
-# Configurações de ambiente (Obrigatório esconder)
+
+# Arquivos de ambiente (sempre privados)
 .env
 srcs/.env
 
-# Segredos e Senhas (Obrigatório esconder)
+# Segredos e senhas (nunca versionar)
 secrets/*.txt
 secrets/
 
-# Dados persistentes (Para não subir o banco de dados pro Git)
+# Volumes persistentes do Docker (dados do banco e WordPress)
 data/
 /home/dramos-j/data/
 
-# Arquivos do Sistema e VM
+# Lixo de sistema/editor/VM
 .DS_Store
 *.swp
 *.vdi
 *.log
 
-# Pastas de build do Docker (Obrigatório esconder)
+# Pastas temporárias de build do Docker
 .docker/
