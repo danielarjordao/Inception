@@ -91,7 +91,7 @@ make fclean
 make
 ```
 
-`make fclean` deletes all data!
+`make fclean` deletes all volumes.
 
 ## Checking Services
 
@@ -162,11 +162,6 @@ Both should contain files after first run.
 
 - Wait 30s for MariaDB initialization
 - Check logs: `docker logs mariadb`
-
-**Changes don't persist:**
-
-- Data is in `/home/dramos-j/data/`
-- Only `make fclean` deletes data
 
 **Rebuild everything:**
 

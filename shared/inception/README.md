@@ -1,6 +1,6 @@
-# Inception
+*This project has been created as part of the 42 curriculum by dramos-j*
 
-*This project has been created as part of the 42 curriculum by dramos-j.*
+# Inception
 
 ## Description
 
@@ -68,7 +68,7 @@ make down
 # Clean up containers and images
 make clean
 
-# Complete cleanup (removes volumes and data)
+# Complete cleanup (removes volumes)
 make fclean
 
 # Rebuild everything
@@ -104,6 +104,7 @@ Examples of Inception implementations by other 42 students, reviewed for compari
 - [pin3dev's Inception](https://github.com/pin3dev/42_Inception)
 - [AnaVolkmann's Inception](https://github.com/AnaVolkmann/inception)
 - [AijaRe's 42Porto Inception](https://github.com/AijaRe/42Porto_Inception)
+- [marianaobmorais/inception](https://github.com/marianaobmorais/inception)
 
 ### AI Usage
 

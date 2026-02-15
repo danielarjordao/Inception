@@ -353,7 +353,7 @@ docker ps | grep nginx
 
 Container should be `Up` again (less uptime than the others).
 
-## ✅ FINAL CHECKLIST BEFORE DELIVERY
+## FINAL CHECKLIST BEFORE DELIVERY
 
 ### Mandatory Subject Requirements
 

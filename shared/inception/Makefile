@@ -1,48 +1,45 @@
-
 # Path to docker-compose file
 COMPOSE_FILE = ./srcs/docker-compose.yml
 # Path to environment variables file
 ENV_FILE = ./srcs/.env
 
-# Include .env variables as Makefile variables
-include ${ENV_FILE}
-export $(shell sed 's/=.*//' ${ENV_FILE})
+# Comandos Docker para facilitar
+DOCKER_COMPOSE = docker compose -f $(COMPOSE_FILE)
 
 # Persistent data directories (bind mounts)
+# Usar $(HOME) torna o script mais flexível, mas mantive seu caminho fixo
 WP_DATA = /home/dramos-j/data/wordpress
 DB_DATA = /home/dramos-j/data/mariadb
 
-# Default target: build and start containers
+# Default target
 all: build up
 
 # Build custom Docker images
-build:
-	docker compose -f ${COMPOSE_FILE} build
+build: create_dirs
+	$(DOCKER_COMPOSE) build
 
-# Start containers in background (depends on create_dirs)
-up: create_dirs
-	docker compose -f ${COMPOSE_FILE} up -d
+# Start containers in background
+up:
+	$(DOCKER_COMPOSE) up -d
 
-# Stop and remove containers
+# Stop containers
 down:
-	docker compose -f ${COMPOSE_FILE} down
+	$(DOCKER_COMPOSE) down
 
-# Clean unused containers, images, and networks
-clean: down
-	docker system prune -af
+# Clean containers and orphans
+clean:
+	$(DOCKER_COMPOSE) down --remove-orphans
 
-# Remove everything, including volumes and persistent data
+# Remove everything: containers, images, volumes AND local data folders
 fclean: clean
-	sudo rm -rf /home/dramos-j/data
-	docker volume rm $$(docker volume ls -q) 2>/dev/null || true
+	$(DOCKER_COMPOSE) down -v --rmi all --remove-orphans
 
 # Rebuild everything from scratch
 re: fclean all
 
 # Create directories for persistent data
 create_dirs:
-	sudo mkdir -p ${WP_DATA}
-	sudo mkdir -p ${DB_DATA}
+	sudo mkdir -p $(WP_DATA)
+	sudo mkdir -p $(DB_DATA)
 
-# Set phony targets, so they are not treated as files
 .PHONY: all build up down clean fclean re create_dirs

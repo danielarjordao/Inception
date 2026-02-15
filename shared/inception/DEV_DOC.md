@@ -120,7 +120,7 @@ make build  # Build images
 make up     # Start containers
 make down   # Stop containers
 make clean  # Stop and prune
-make fclean # Remove data too
+make fclean # Remove volumes too
 make re     # Rebuild everything
 ```
 
@@ -384,30 +384,30 @@ sudo chown -R 999:999 /home/dramos-j/data/mariadb/
 
 **Required:**
 
-- ✅ Virtual machine
-- ✅ Docker Compose
-- ✅ Custom Dockerfiles (one per service)
-- ✅ Debian penultimate stable (bookworm-slim)
-- ✅ NGINX TLSv1.2 only, port 443
-- ✅ WordPress + php-fpm (no nginx)
-- ✅ MariaDB (no nginx)
-- ✅ Two volumes (WordPress files + database)
-- ✅ Docker network
-- ✅ Restart on crash (`on-failure`)
-- ✅ No infinite loops
-- ✅ No `network: host`, `--link`, `links:`
-- ✅ No `latest` tags
-- ✅ No passwords in Dockerfiles
-- ✅ Environment variables + secrets
-- ✅ Two WordPress users (admin not named "admin")
-- ✅ Volumes in `/home/login/data/`
-- ✅ Domain: `login.42.fr`
+- Virtual machine
+- Docker Compose
+- Custom Dockerfiles (one per service)
+- Debian penultimate stable (bookworm-slim)
+- NGINX TLSv1.2 only, port 443
+- WordPress + php-fpm (no nginx)
+- MariaDB (no nginx)
+- Two volumes (WordPress files + database)
+- Docker network
+- Restart on crash (`on-failure`)
+- No infinite loops
+- No `network: host`, `--link`, `links:`
+- No `latest` tags
+- No passwords in Dockerfiles
+- Environment variables + secrets
+- Two WordPress users (admin not named "admin")
+- Volumes in `/home/login/data/`
+- Domain: `login.42.fr`
 
 **Prohibited:**
 
-- ❌ No `tail -f`, `sleep infinity`, `while true`
-- ❌ No passwords in Dockerfiles
-- ❌ No pulling ready-made images (except base)
-- ❌ No `latest` tags
+-  No `tail -f`, `sleep infinity`, `while true`
+-  No passwords in Dockerfiles
+-  No pulling ready-made images (except base)
+-  No `latest` tags
 
 For user instructions, see [USER_DOC.md](USER_DOC.md).
