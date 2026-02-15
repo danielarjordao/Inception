@@ -54,15 +54,39 @@ SHOW TABLES;
 
 ```
 
-## 4. Mudar a Porta do NGINX (Se pedirem para mudar de 443 para 8443)
-
+## 4. Mudar a Porta do NGINX
 Se pedir para mudar a porta do Nginx de 443 para 8443:
 
-1. Abra o `srcs/docker-compose.yml`.
-2. Mude em `nginx > ports`: de `"443:443"` para `"8443:443"`.
-3. Rode: `docker compose up -d --build nginx`.
-4. Acesse: `https://dramos-j.42.fr:8443`.
+### Alterar a Infraestrutura
 
+Altera o mapeamento no ficheiro srcs/docker-compose.yml..
+
+YAML
+nginx:
+  ports:
+    - "8443:443" # Agora a VM ouve na 8443 e manda para a 443 do container
+
+### Sincronizar o WordPress
+
+O WordPress guarda a URL na base de dados. Para ele não redirecionar de volta para a 443, usar o WP-CLI imediatamente após subir o container.
+
+Comandos para mudar para 8443:
+
+```bash
+# Altera o docker-compose.yml para "8443:443"
+docker compose -f srcs/docker-compose.yml up -d nginx
+docker exec -it wordpress wp option update home 'https://dramos-j.42.fr:8443' --allow-root
+docker exec -it wordpress wp option update siteurl 'https://dramos-j.42.fr:8443' --allow-root
+```
+
+Comandos para voltar para 443:
+
+```bash
+# Altera o docker-compose.yml de volta para "443:443"
+docker compose -f srcs/docker-compose.yml up -d nginx
+docker exec -it wordpress wp option update home 'https://dramos-j.42.fr' --allow-root
+docker exec -it wordpress wp option update siteurl 'https://dramos-j.42.fr' --allow-root
+```
 ## 5. Dicas
 
 * **Logs:** Se algo não subir, use o comando `docker logs <nome_do_container>`.
